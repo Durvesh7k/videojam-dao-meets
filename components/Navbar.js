@@ -8,7 +8,7 @@ export default function Navbar() {
             <Link href="/" className='hover:bg-orange-600 p-2 rounded-3xl px-4 duration-300 cursor-pointer'>Home</Link>
             <Link href="/meet" className='hover:bg-orange-600 p-2 rounded-3xl px-4 duration-300 cursor-pointer'>Meet</Link>
             <Link href="/dao-register" className='hover:bg-orange-600 p-2 rounded-3xl px-4 duration-300 cursor-pointer'>Register</Link>
-            <Link href="/" className='hover:bg-orange-600 p-2 rounded-3xl px-4 duration-300 cursor-pointer'>Recordings</Link>
+            <Link href="/records" className='hover:bg-orange-600 p-2 rounded-3xl px-4 duration-300 cursor-pointer'>Recordings</Link>
         </ul>
         <div className='hidden md:flex'>
             <ConnectButton />

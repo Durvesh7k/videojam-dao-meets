@@ -13,9 +13,9 @@ export default function Home() {
           <h1 className='leading-tight text-4xl lg:text-6xl font-bold'>Meet Without Worrying about Language</h1>
           <p className=' mt-8 text-lg text-justify '>Use Moment to get new experience in doing video meet, don't care about language, you can set it in the Settings secion</p>
 
-          <div className='mt-8 space-x-10 flex  '>
+          <div className='mt-8 space-x-10 flex  items-center '>
             <Link href='/meet'><button className='p-[0.6rem] px-7 rounded-3xl border border-white bg-[#fe7639] hover:bg-transparent text-lg'>Go to Meet</button></Link>
-            <button className='text-lg hover:underline hover:underline-offset-4'>Register for DAO</button>
+            <Link href='/dao-register'><button className='text-lg hover:underline underline-offset-4 duration-500'>Register for DAO</button></Link>
           </div>
         </div>
 
