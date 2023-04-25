@@ -29,13 +29,16 @@ export default function Register() {
     return (
         <>
             <Navbar />
-            <div className="bg-[#212121] flex justify-center items-start pb-32">
 
+            <div className="bg-[#212121] absolute w-full top-0 flex justify-center lg:items-start pb-32 items-center">
                 {/* FORM  */}
-                <form action="" className="pt-36 justify-center items-center space-y-6">
-                    <h1 className="font-bold text-3xl underline underline-offset-4">Register DAO</h1>
+                <form action="" className="pt-24  lg:pt-36 justify-center items-center space-y-2 lg:space-y-6">
+                    <div className="flex justify-center pb-5">
+                        
+                    <h1 className="font-bold text-2xl lg:text-3xl underline underline-offset-4">Register DAO</h1>
+                    </div>
 
-                    <div className="flex space-x-9 ">
+                    <div className="space-y-2 md:space-y-0 md:flex md:space-x-9   ">
                         <div>
                             <h1 className="text-lg">DAO Name</h1>
                             <input name="name" placeholder="Enter DAO Name" className="w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
@@ -48,7 +51,7 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <div className="flex space-x-9">
+                    <div className="space-y-2 md:space-y-0 md:flex md:space-x-9 ">
                         <div>
                             <h1 className="text-lg">Date & Time</h1>
                             <input name="date_time" type="datetime-local" placeholder="Enter DAO Name" className="w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
@@ -69,6 +72,7 @@ export default function Register() {
 
                     {/* ADDING MEMBERS  */}
                     <div>
+                    <h1 className="text-lg">Members</h1>
                         {
                             data.map((val, i) => {
                                 return (
