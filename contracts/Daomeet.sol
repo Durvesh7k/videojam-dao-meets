@@ -64,9 +64,9 @@ contract Daomeet {
     function getDao(string memory _owner) public view returns(dao[] memory _daos)  {
         for (uint256 i = 0; i < daos.length; i++) {
             for (uint256 k = 0; k < daos[i].members.length; k++){
-             if (daos[i].owner == msg.sender || hash(daos[i].members[k]) == hash(_owner)){
+            if (daos[i].owner == msg.sender || hash(daos[i].members[k]) == hash(_owner)){
                 return daos;
-             }
+            }
           }
         }
     }

@@ -3,7 +3,6 @@ import { Navbar } from "@/components";
 export default function Register() {
     return (
         <>
-            <Navbar />
             <div className="bg-[#212121] h-screen flex justify-center items-start">
                 <form action="" className="pt-40 justify-center items-center space-y-6  ">
                     <div className="flex space-x-9 ">
