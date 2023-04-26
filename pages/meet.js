@@ -99,21 +99,28 @@ export default function Meet() {
 
 
     return <>
-        <div className="bg-[#212121] pb-64 pt-64 absolute top-0 flex flex-col-reverse w-full md:flex-row justify-center items-center  space-x-20">
-            <div className='pr-20  border-r-2'>
-                <div className='pb-7 pt-5 flex flex-col justify-center items-center sm:items-start'>
+
+        <div className="bg-[#212121] pb-64 pt-24 lg:pt-64 absolute top-0 flex flex-col w-full lg:flex-row justify-center items-center lg:space-x-10 space-y-5 lg:space-y-0 px-5 lg:px-20 ">
+
+            <div className=' lg:border-r-2 flex flex-col justify-center items-center lg:items-start pr-5'>
+                <div className='pb-7 pt-5 flex flex-col justify-center items-center'>
                     <h1 className='font-bold text-xl'>Join Existing Meet</h1>
-                    <form action="" className="flex sm:space-x-5 mt-5 flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0">
+                    {/* JOIN EXSITING MEET */}
+                    <form action="" className="flex sm:space-x-5 mt-2 flex-col sm:flex-row space-y-3 sm:space-y-0 justify-center items-center">
                         <div className='flex relative items-center'>
-                            <MdOutlineKeyboard className='text-gray-800 absolute mx-2 pointer-events-none' size='25' /><input type="text" placeholder="Enter the Link" className="p-1 text-lg px-5 w-72 md:w-80 text-black outline-none rounded-lg pl-10 focus:out"  ></input>
+                            <MdOutlineKeyboard className='text-gray-800 absolute mx-2 pointer-events-none' size='25' /><input type="text" placeholder="Enter the Link" className="p-1 text-lg px-5 w-72 md:w-80 text-black outline-none rounded-lg pl-10"  ></input>
                         </div>
                         <button className="bg-blue-700 px-8 text-lg rounded-lg font-bold w-32 py-[0.4rem] hover:bg-blue-800">Join</button>
                     </form>
                 </div>
-                {/* <h1 className='font-bold text-xl'>Create New Meet</h1> */}
-                <form className="flex sm:space-x-5 mt-2 flex-col sm:flex-row  space-y-3 sm:space-y-0">
-                    {/* <input type="text" placeholder="Enter the Link" className="p-1 text-lg px-5 w-72 md:w-80 text-black outline-none rounded-3xl" /> */}
-                    <Link href="hvhjec-verkvr-rvlkr"><button className="bg-blue-700 px-8 text-lg rounded-lg font-bold  py-[0.4rem]">Create New Meet</button></Link>
+
+                {/* CREATE MEET */}
+                <h1 className='font-bold text-xl'>Create new Meet</h1>
+                <form className="flex sm:space-x-5 mt-2 flex-col sm:flex-row space-y-3 sm:space-y-0 justify-center items-center">
+                    <div className='flex relative items-center justify-center'>
+                        <input type="text" placeholder="Enter the Description" className="p-1 text-lg px-5 w-72 md:w-80 text-black outline-none rounded-lg" />
+                    </div>
+                    <Link href="hvhjec-verkvr-rvlkr"><button className="bg-blue-700 px-3 text-lg rounded-lg font-bold  py-[0.4rem] hover:bg-blue-800">Create New Meet</button></Link>
                 </form>
             </div>
 
@@ -133,6 +140,7 @@ export default function Meet() {
                 </div>
             </Link>
         </div>
+
     </>
 
 }
