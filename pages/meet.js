@@ -1,11 +1,103 @@
 import { Navbar} from '@/components'
 import Link from 'next/link'
 import { MdOutlineKeyboard } from 'react-icons/md'
+import axios from "axios";
+import {
+    useAudio,
+    useLobby,
+    useMeetingMachine,
+    usePeers,
+    useRoom,
+    useVideo,
+} from "@huddle01/react/hooks";
+import { useEffect, useState } from 'react'
+import Web3Modal from 'web3modal';
+import contractABI from "../artifacts/contracts/Daomeet.sol/Daomeet.json"
+import { ethers } from 'ethers'
+import { useAccount } from 'wagmi'
+import { contractAddress } from '@/config'
 
 export default function Meet() {
+
+    const [roomId, setRoomId] = useState("eup-fkpq-tok");
+    const { address } = useAccount();
+    const { joinLobby } = useLobby();
+    const {fetchVideoStream} = useVideo();
+
+
+
+
+    async function newRoomId() {
+        try {
+            const response = await axios.post(
+                'https://iriko.testing.huddle01.com/api/v1/create-room',
+                {
+                    title: 'Huddle01-Test',
+                    hostWallets: ['0xf96a192C5769684b8d4a77f480585fE09cefeAa6'],
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': "VwTZ4AGTxme9snANex9tep3NwvVMGfYd",
+                    },
+                }
+            )
+
+            const newRoomId = response.data.data.roomId;
+            console.log(newRoomId);
+            return newRoomId;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffect(() => {
+        newRoomId();
+    }, [])
+
+    async function getRoomId() {
+        try {
+            const web3Modal = new Web3Modal()
+            const connection = await web3Modal.connect()
+            const provider = new ethers.providers.Web3Provider(connection);
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(
+                contractAddress,
+                contractABI.abi,
+                signer
+            )
+            const dao = await contract.getDao(address);
+            setRoomId(dao.roomId)
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function newMeeting() {
+        const newRoomId = await getRoomId();
+        try {
+            const web3Modal = new Web3Modal()
+            const connection = await web3Modal.connect()
+            const provider = new ethers.providers.Web3Provider(connection);
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(
+                contractAddress,
+                contractABI.abi,
+                signer
+            )
+            const newMeetTx = await contract.newMeet(newRoomId, 1145);
+            newMeetTx.wait();
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+
+
     return <>
-        <Navbar />
-        
+
         <div className="bg-[#212121] pb-64 pt-24 lg:pt-64 absolute top-0 flex flex-col w-full lg:flex-row justify-center items-center lg:space-x-10 space-y-5 lg:space-y-0 px-5 lg:px-20 ">
             <div className=' lg:border-r-2 flex flex-col justify-center items-center lg:items-start pr-5'>
                 <div className='pb-7 pt-5 flex flex-col justify-center items-center lg:items-start lg:justify-start'>
@@ -29,19 +121,21 @@ export default function Meet() {
                 </form>
             </div>
 
-            {/* SCHEDULED MEETINGS */}
-
-            <Link className='lg:w-1/3' href="jhbvr-bjvkr-bjvkbr">
-                <h1 className='font-bold text-2xl underline underline-offset-4 tracking-wide mb-5'>Scheduled Meetings</h1>
-                <div className=' bg-gray-700 p-5 px-6 rounded-lg  hover:scale-105 duration-300 '>
-                    <h1 className='text-xl font-semibold'>Meet-Title</h1>
-                    <p className='text-clip'>hvbewucvhjvdwnv vh hwbvih vhw  vn vdhi vhiewvk hv eihwv iwhv ehi vweih sdvrhv sdihs dv jjlbr k vjre vk v rek vre vreh vre v erk</p>
-                    <span className='font-bold text-lg '>Meet Link : </span><span className='text-xl text-blue-300 underline ml-2 cursor-text select-all'>jhbvr-bjvkr-bjvkbr</span>
+            {/* <Image src={doameets} className='md:w-1/2'></Image> */}
+            <Link className='w-1/3' href={{
+                pathname: `/meet/${roomId}`,
+            }}
+            onClick={()=>{
+                joinLobby(roomId)
+                fetchVideoStream();
+            }}>
+                <div className=' bg-gray-600 p-5 px-6 rounded-lg hover:scale-105 duration-300 '>
+                    <h1 className='font-bold text-2xl underline underline-offset-4 tracking-wide'>Scheduled Meetings</h1>
+                    <h1 className='text-xl mt-4 font-semibold'>Meet-Title</h1>
+                    <p>hvbewucvhjvdwnv vh hwbvih vhw  vn vdhi vhiewvk hv eihwv iwhv ehi vweih sdvrhv sdihs dv</p>
+                    <span className='font-bold text-lg '>Meet Link : </span><span className='text-xl text-blue-300 underline ml-2 cursor-text select-all'>{roomId}</span>
                 </div>
             </Link>
-
-
-
         </div>
 
     </>

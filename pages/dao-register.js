@@ -28,8 +28,6 @@ export default function Register() {
 
     return (
         <>
-            <Navbar />
-
             <div className="bg-[#212121] absolute w-full top-0 flex justify-center lg:items-start pb-32 items-center">
                 {/* FORM  */}
                 <form action="" className="pt-24  lg:pt-36 justify-center items-center space-y-2 lg:space-y-6">
