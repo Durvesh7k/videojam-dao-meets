@@ -65,34 +65,28 @@ export default function MeetID() {
     const { peers } = usePeers();
 
     useEffect(() => {
+        console.log(state.value)
         console.log(peers);
+
     }, [])
 
 
 
 
     return <>
-        <div className='bg-[#212121] h-screen '>
+        <div className='bg-[#212121] h-max scrollbar-hide'>
             <div className='px-10 fixed py-2 flex justify-between w-screen'>
                 <h1 className='pt-2 bg-gray-900 bg-opacity-70 bg-transparent font-semibold'>{("0" + today.getHours()).slice(-2) + ":" + today.getMinutes()} | {meet_id}</h1>
 
                 {/* VIDEO CAMERA  */}
-                <div className="">
-                    {!isActive3 ? <button className='p-2 px-4 border mr-4 rounded-full font-bold flex justify-center items-center' onClick={() => {
-                        setIsActive3(!isActive3)
-                    }} ><BsRecordBtn className='mr-2' size='20' />Record</button>
-                        :
-                        <button className='p-2 px-4 border-2 border-[#E62020] mr-4 rounded-full font-bold flex justify-center items-center text-[#FF0000]' onClick={() => {
-                            setIsActive3(!isActive3)
-                        }} ><BsRecordBtn className='mr-2' size='20' /> Recording</button>
-                    }
-                </div>
 
             </div>
 
-            <div>
-                <div className="grid grid-cols-3 py-14 justify-center items-center px-8 gap-5">
-                    <video className='justify-start items-center rounded-xl w-[50rem]' ref={videoRef} autoPlay muted></video>
+            <div className='grid grid-cols-3 p-5 h-screen'>
+                <div className="col-span-2">
+                    <video className='justify-start items-center rounded-xl w-50 mt-6' ref={videoRef} autoPlay muted></video>
+                </div>
+                <div className="overflow-y-auto scrollbar-hide">
                     {Object.values(peers)
                         .filter((peer) => peer.cam)
                         .map((peer) => (
@@ -101,6 +95,7 @@ export default function MeetID() {
                                 peerId={peer.peerId}
                                 track={peer.cam}
                                 debug
+                                className='w-2/3 rounded-md'
                             />
                         ))}
                     {Object.values(peers)
@@ -109,6 +104,8 @@ export default function MeetID() {
                             <Audio key={peer.peerId} peerId={peer.peerId} track={peer.mic} />
                         ))}
                 </div>
+
+
             </div>
 
             {/* CONTROLS */}
