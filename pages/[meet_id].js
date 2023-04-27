@@ -5,7 +5,8 @@ import { MdCallEnd } from 'react-icons/md'
 import { BiVideo, BiVideoOff, BiMicrophone, BiMicrophoneOff } from 'react-icons/bi'
 import { useState } from 'react';
 import Link from 'next/link';
-import { BsRecordBtn } from 'react-icons/bs'
+import { BsRecordBtn } from 'react-icons/bs';
+import { AiOutlineClose, AiOutlineArrowLeft } from 'react-icons/ai'
 
 
 export default function MeetID() {
@@ -16,23 +17,17 @@ export default function MeetID() {
     const [isActive3, setIsActive3] = useState(false); // For Mic
     var today = new Date();  // Getting Current Time 
 
+    const [audioenabled, setaudioEnabled] = useState(false);
+    const [videoenabled, setvideoEnabled] = useState(false);
+
+    const [isSideOpen, setIsSideOpen] = useState(false)
+
     return <>
         <div className='bg-[#212121] '>
-            <div className='px-10 fixed py-2 flex justify-between w-screen'>
+
+            {/* UPPER BAR  */}
+            <div className='px-10 fixed py-2 flex justify-between w-screen items-center'>
                 <h1 className='pt-2 bg-gray-900 bg-opacity-70 bg-transparent font-semibold'>{("0" + today.getHours()).slice(-2) + ":" + today.getMinutes()} | {meet_id}</h1>
-
-                {/* VIDEO CAMERA  */}
-                <div className="">
-                    {!isActive3 ? <button className='p-2 px-4 border mr-4 rounded-full font-bold flex justify-center items-center' onClick={() => {
-                        setIsActive3(!isActive3)
-                    }} ><BsRecordBtn className='mr-2' size='20' />Record</button>
-                        :
-                        <button className='p-2 px-4 border-2 border-[#E62020] mr-4 rounded-full font-bold flex justify-center items-center text-[#FF0000]' onClick={() => {
-                            setIsActive3(!isActive3)
-                        }} ><BsRecordBtn className='mr-2' size='20' /> Recording</button>
-                    }
-                </div>
-
             </div>
 
             <div className="grid grid-cols-3 py-14 justify-center items-center px-8 gap-5">
@@ -42,8 +37,6 @@ export default function MeetID() {
                 <Image src={profile} className='justify-start items-center rounded-xl w-[50rem]'></Image>
                 <Image src={profile} className='justify-start items-center rounded-xl w-[50rem]'></Image>
                 <Image src={profile} className='justify-start items-center rounded-xl w-[50rem]'></Image>
-
-      
             </div>
 
             {/* CONTROLS */}
@@ -74,6 +67,101 @@ export default function MeetID() {
                     }
                 </div>
             </div>
+
+
+
+            {/* Sidebar opening button */}
+            <div onClick={() => setIsSideOpen(!isSideOpen)} className='absolute right-0 top-2/4 cursor-pointer bg-slate-500 p-2 py-6 rounded-l-full' ><AiOutlineArrowLeft className='text-2xl' /></div>
+
+            {/* SIDEBAR */}
+            <ul className={isSideOpen ? "bg-gray-900 h-full w-80   flex-col pt-10 px-5 z-50 absolute top-0 right-0 space-y-5" : "hidden"}>
+
+                {/* RIGHT ARROW BUTTON */}
+                <li>
+                    <button className='absolute right-6 top-4' onClick={() => setIsSideOpen(!isSideOpen)} ><AiOutlineClose className='text-2xl' /></button>
+                </li>
+
+                {/* FETCH AUDIO  */}
+                <li className='ml-2'>
+                    <div className="flex">
+                        <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                className="sr-only peer"
+                                checked={audioenabled}
+                                readOnly
+                            />
+                            <div
+                                onClick={() => {
+                                    setaudioEnabled(!audioenabled);
+                                }}
+                                className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+                            ></div>
+                            <span className="ml-2 text-md font-medium ">
+                                Fetch Audio
+                            </span>
+                        </label>
+                    </div>
+                </li>
+
+                {/* FETCH VIDEO */}
+                <li className='ml-2'>
+                    <div className="flex">
+                        <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                className="sr-only peer"
+                                checked={videoenabled}
+                                readOnly
+                            />
+                            <div
+                                onClick={() => {
+                                    setvideoEnabled(!videoenabled);
+                                }}
+                                className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+                            ></div>
+                            <span className="ml-2 text-md font-medium ">
+                                Fetch Video
+                            </span>
+                        </label>
+                    </div>
+                </li>
+
+                {/* RECORDING */}
+                <li className='ml-2'>
+                    <div className="">
+                        {!isActive3 ? <button className='p-2 px-4 border rounded-full font-bold flex justify-center items-center' onClick={() => {
+                            setIsActive3(!isActive3)
+                        }} ><BsRecordBtn className='mr-2' size='20' />Record</button>
+                            :
+                            <button className='p-2 px-4 border border-[#E62020] rounded-full font-bold flex justify-center items-center text-[#FF0000]' onClick={() => {
+                                setIsActive3(!isActive3)
+                            }} ><BsRecordBtn className='mr-2' size='20' /> Recording</button>
+                        }
+                    </div>
+                </li>
+
+                {/* PEERS */}
+                <li className='ml-2'>
+                    <div className='flex flex-col justify-start items-start ml-3'>
+                        <h1 className='text-xl font-semibold underline underline-offset-4'>PEERS</h1>
+                        <ul className='mt-3 list-disc'>
+                            <li>Lorem ipsum dolor sit amet consectetur </li>
+                            <li>peer1</li>
+                            <li>peer1</li>
+                            <li>peer1</li>
+                            <li>peer1</li>
+                            <li>peer1</li>
+                            <li>peer1</li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul >
+
+
+
+
         </div>
     </>
 }
