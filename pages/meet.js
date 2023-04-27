@@ -12,7 +12,7 @@ import {
 } from "@huddle01/react/hooks";
 import { useEffect, useState } from 'react'
 import Web3Modal from 'web3modal';
-import contractABI from "../artifacts/contracts/Daomeet.sol/Daomeet.json"
+// import contractABI from "../artifacts/contracts/Daomeet.sol/Daomeet.json"
 import { ethers } from 'ethers'
 import { useAccount } from 'wagmi'
 import { contractAddress } from '@/config'
