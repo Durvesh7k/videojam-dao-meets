@@ -12,7 +12,8 @@ contract Daomeet {
         string name,
         string roomid,
         uint256 timestap,
-        uint256 meettime
+        uint256 meettime,
+        string description
     );
 
 
@@ -24,10 +25,11 @@ contract Daomeet {
         string roomid;
         uint256 timestap;
         uint256 meettime;
+        string description;
     }
 
     
-    function register(string[] memory _members, string calldata _name, string calldata _roomid, uint256 _meettime) external {
+    function register(string[] memory _members, string calldata _name, string calldata _roomid, uint256 _meettime, string memory _description) external {
         daos.push(dao(
             hash(_name),
             msg.sender,
@@ -35,7 +37,8 @@ contract Daomeet {
             _name,
             _roomid,
             block.timestamp,
-            _meettime
+            _meettime,
+            _description
         ));
 
         emit newDaoRegister(
@@ -45,15 +48,17 @@ contract Daomeet {
             _name,
             _roomid,
             block.timestamp,
-            _meettime
+            _meettime,
+            _description
         );
     }
 
-    function newMeet(string calldata _roomid, uint256 _time) external {
+    function newMeet(string calldata _roomid, uint256 _time, string memory _description) external {
         for (uint256 i = 0; i < daos.length; i++) {
             require(daos[i].owner == msg.sender, "Not the owner");
             daos[i].roomid = _roomid;
             daos[i].meettime = _time;
+            daos[i].description = _description;
         }
     }
 

@@ -98,7 +98,7 @@ export default function Meet() {
 
     return <>
 
-        <div className="bg-[#212121] pb-64 pt-24 lg:pt-64 absolute top-0 flex flex-col w-full lg:flex-row justify-center items-center lg:space-x-10 space-y-5 lg:space-y-0 px-5 lg:px-20 ">
+        <div className="bg-[#212121] h-screen pt-24  absolute top-0 flex flex-col w-full lg:flex-row justify-center items-center lg:space-x-10 space-y-5 lg:space-y-0 px-5 lg:px-20 ">
             <div className=' lg:border-r-2 flex flex-col justify-center items-center lg:items-start pr-5'>
                 <div className='pb-7 pt-5 flex flex-col justify-center items-center lg:items-start lg:justify-start'>
                     <h1 className='font-bold text-xl'>Join Existing Meet</h1>
@@ -127,7 +127,6 @@ export default function Meet() {
             }}
             onClick={()=>{
                 joinLobby(roomId)
-                fetchVideoStream();
             }}>
                 <div className=' bg-gray-600 p-5 px-6 rounded-lg hover:scale-105 duration-300 '>
                     <h1 className='font-bold text-2xl underline underline-offset-4 tracking-wide'>Scheduled Meetings</h1>
