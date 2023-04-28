@@ -1,9 +1,20 @@
 import { Navbar } from "@/components";
 import { useState } from "react";
+import Web3Modal from 'web3modal';
+import contractABI from "../artifacts/contracts/Daomeet.sol/Daomeet.json"
+import { ethers } from 'ethers'
+import { useAccount } from 'wagmi'
+import { contractAddress } from '@/config'
 
 export default function Register() {
 
-    const [data, setData] = useState([{ member: '' }])
+    const [data, setData] = useState([{ member: '' }]);
+    const [dao, setDao] = useState({
+        name : "",
+        description: "",
+        time: 0,
+        members : null,
+    })
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -25,6 +36,15 @@ export default function Register() {
         setData(deleteVal)
     }
 
+    async function newDao(){
+
+    }
+
+    const handleForm = (event) => {
+        setDao({...dao, [event.target.name] : event.target.value})
+    }
+
+
 
     return (
         <>
@@ -39,7 +59,7 @@ export default function Register() {
                     <div className="space-y-2 md:space-y-0 md:flex md:space-x-9   ">
                         <div>
                             <h1 className="text-lg">DAO Name</h1>
-                            <input name="name" placeholder="Enter DAO Name" className="w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
+                            <input onChange={handleForm} name="name" placeholder="Enter DAO Name" className="w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
                         </div>
                         <div>
                             <div>
@@ -52,12 +72,12 @@ export default function Register() {
                     <div className="space-y-2 md:space-y-0 md:flex md:space-x-9 ">
                         <div>
                             <h1 className="text-lg">Date & Time</h1>
-                            <input name="date_time" type="datetime-local" placeholder="Enter DAO Name" className="w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
+                            <input onChange={handleForm} name="time" type="datetime-local" placeholder="Enter DAO Name" className="w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
                         </div>
                         <div>
                             <div>
                                 <h1 className="text-lg">DAO Description</h1>
-                                <textarea name="desc" placeholder="Enter the description" className="text-md w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
+                                <textarea onChange={handleForm} name="description" placeholder="Enter the description" className="text-md w-[20rem] p-2 rounded-xl bg-slate-700 outline-none px-4" />
                             </div>
                         </div>
                     </div>

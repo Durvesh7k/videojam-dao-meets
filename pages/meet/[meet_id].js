@@ -171,7 +171,7 @@ export default function MeetID() {
                 {/* FETCH AUDIO  */}
                 <li className='ml-2'>
                     <div className="flex">
-                        <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                        <label className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input
                                 type="checkbox"
                                 className="sr-only peer"
@@ -197,7 +197,7 @@ export default function MeetID() {
                 {/* FETCH VIDEO */}
                 <li className='ml-2'>
                     <div className="flex">
-                        <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                        <label className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input
                                 type="checkbox"
                                 className="sr-only peer"
