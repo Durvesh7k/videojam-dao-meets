@@ -202,6 +202,7 @@ export default function MeetID() {
 
     const [audioenabled, setaudioEnabled] = useState(false);
     const [videoenabled, setvideoEnabled] = useState(false);
+    const [joinedroom, setJoinedRoom] = useState(false);
 
     // Event Listner
     useEventListener("lobby:cam-on", () => {
@@ -342,9 +343,6 @@ export default function MeetID() {
                 </button>
             </div>
 
-
-
-
             {/* Sidebar opening button */}
             <div onClick={() => setIsSideOpen(!isSideOpen)} className='absolute right-0 top-2/4 cursor-pointer bg-slate-500 p-2 py-6 rounded-l-full' ><AiOutlineArrowLeft className='text-2xl' /></div>
 
@@ -355,25 +353,38 @@ export default function MeetID() {
                     <button className='absolute right-6 top-4' onClick={() => setIsSideOpen(!isSideOpen)} ><AiOutlineClose className='text-2xl' /></button>
                 </li>
 
+                {/* JOIN ROOM */}
+                < li className='ml-2' >
+                    <div className="">
+                        {!joinedroom ? <button className='p-2 px-4 border-2 rounded-full font-bold flex justify-center items-center' onClick={() => {
+                            setJoinedRoom(!joinedroom)
+                        }} >Join Room</button>
+                            :
+                            <button className='p-2 px-4 border-2 border-green-700 rounded-full font-bold flex justify-center items-center text-green-500' onClick={() => {
+                                setJoinedRoom(!joinedroom)
+                            }} >Joined . . .</button>
+                        }
+                    </div>
+                </li >
+
                 {/* FETCH AUDIO  */}
                 <li className='ml-2'>
                     <div className="flex">
-                        <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                        <label className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input
                                 type="checkbox"
                                 className="sr-only peer"
-                                checked={videoenabled}
-
+                                checked={audioenabled}
                                 readOnly
                             />
-                            
+
                             <div
                                 onClick={() => {
-                                    setEnabled(!videoenabled)                                   
+                                    setaudioEnabled(!audioenabled)
                                 }}
                                 className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
                             ></div>
-                            
+
                             <span className="ml-2 text-md font-medium ">
                                 Fetch Audio
                             </span>
@@ -384,14 +395,21 @@ export default function MeetID() {
                 {/* FETCH VIDEO */}
                 <li className='ml-2'>
                     <div className="flex">
-                        <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                        <label className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input
                                 type="checkbox"
                                 className="sr-only peer"
-
+                                checked={videoenabled}
                                 readOnly
                             />
-                            <div onClick={() => produceVideo(camStream)}
+                            <div onClick={() => {
+                                setvideoEnabled(!videoenabled)
+                                if (!videoenabled) {
+                                    fetchVideoStream();
+                                } else {
+                                    stopVideoStream();
+                                }
+                            }}
                                 className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
                             ></div>
                             <span className="ml-2 text-md font-medium ">
@@ -399,10 +417,10 @@ export default function MeetID() {
                             </span>
                         </label>
                     </div>
-                </li>
+                </li >
 
                 {/* RECORDING */}
-                <li className='ml-2'>
+                < li className='ml-2' >
                     <div className="">
                         {!isActive3 ? <button className='p-2 px-4 border rounded-full font-bold flex justify-center items-center' onClick={() => {
                             setIsActive3(!isActive3)
@@ -413,10 +431,10 @@ export default function MeetID() {
                             }} ><BsRecordBtn className='mr-2' size='20' /> Recording</button>
                         }
                     </div>
-                </li>
+                </li >
 
                 {/* PEERS */}
-                <li className='ml-2'>
+                < li className='ml-2' >
                     <div className='flex flex-col justify-start items-start ml-3'>
                         <h1 className='text-xl font-semibold underline underline-offset-4'>PEERS</h1>
                         <ul className='mt-3 list-disc'>
@@ -429,11 +447,11 @@ export default function MeetID() {
                             <li>peer1</li>
                         </ul>
                     </div>
-                </li>
+                </li >
 
             </ul >
 
-        </div>
+        </div >
     </>
 }
 
