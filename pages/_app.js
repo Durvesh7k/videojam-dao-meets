@@ -41,7 +41,6 @@ export default function App({ Component, pageProps }) {
   const{initialize} = useHuddle01()
   useEffect(() => {
     initialize("KL1r3E1yHfcrRbXsT4mcE-3mK60Yc3YR");
-    console.log(router.pathname)
   }, []);
 
   

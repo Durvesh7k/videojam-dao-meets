@@ -1,6 +1,4 @@
-import Image from 'next/image'
-import doameets from '../public/doameets.png'
-import { Navbar } from '@/components'
+import { Navbar} from '@/components'
 import Link from 'next/link'
 import { MdOutlineKeyboard } from 'react-icons/md'
 import axios from "axios";
@@ -14,7 +12,7 @@ import {
 } from "@huddle01/react/hooks";
 import { useEffect, useState } from 'react'
 import Web3Modal from 'web3modal';
-import contractABI from "../artifacts/contracts/Daomeet.sol/Daomeet.json"
+// import contractABI from "../artifacts/contracts/Daomeet.sol/Daomeet.json"
 import { ethers } from 'ethers'
 import { useAccount } from 'wagmi'
 import { contractAddress } from '@/config'
@@ -100,10 +98,9 @@ export default function Meet() {
 
     return <>
 
-        <div className="bg-[#212121] pb-64 pt-24 lg:pt-64 absolute top-0 flex flex-col w-full lg:flex-row justify-center items-center lg:space-x-10 space-y-5 lg:space-y-0 px-5 lg:px-20 ">
-
+        <div className="bg-[#212121] h-screen pt-24  absolute top-0 flex flex-col w-full lg:flex-row justify-center items-center lg:space-x-10 space-y-5 lg:space-y-0 px-5 lg:px-20 ">
             <div className=' lg:border-r-2 flex flex-col justify-center items-center lg:items-start pr-5'>
-                <div className='pb-7 pt-5 flex flex-col justify-center items-center'>
+                <div className='pb-7 pt-5 flex flex-col justify-center items-center lg:items-start lg:justify-start'>
                     <h1 className='font-bold text-xl'>Join Existing Meet</h1>
                     {/* JOIN EXSITING MEET */}
                     <form action="" className="flex sm:space-x-5 mt-2 flex-col sm:flex-row space-y-3 sm:space-y-0 justify-center items-center">
@@ -130,7 +127,6 @@ export default function Meet() {
             }}
             onClick={()=>{
                 joinLobby(roomId)
-                fetchVideoStream();
             }}>
                 <div className=' bg-gray-600 p-5 px-6 rounded-lg hover:scale-105 duration-300 '>
                     <h1 className='font-bold text-2xl underline underline-offset-4 tracking-wide'>Scheduled Meetings</h1>
