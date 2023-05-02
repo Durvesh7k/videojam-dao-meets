@@ -32,7 +32,7 @@ export default function MeetID() {
     const videoRef = useRef(null);
     const { state, send } = useMeetingMachine();
     const [isSideOpen, setIsSideOpen] = useState(false) 
-    const {startRecording, stopRecording} = useRecording();
+    const {startRecording, stopRecording, data: recordingData,error} = useRecording();
 
 
 
@@ -164,6 +164,8 @@ export default function MeetID() {
                         }} /></div>
                     }
                 </div>
+                <div className="text-green-300">{(recordingData)?.s3Url}</div>
+                <p>{error}</p>
             </div>
 
             {/* Sidebar opening button */}
@@ -247,7 +249,7 @@ export default function MeetID() {
                     <div className="">
                         {!isActive3 ? <button className='p-2 px-4 border rounded-full font-bold flex justify-center items-center' onClick={() => {
                             setIsActive3(!isActive3)
-                            startRecording(`https://localhost:3000/meet/${meet_id}`)
+                            startRecording(`https://${window.location.host}/meet/${meet_id}`)
                         }} ><BsRecordBtn className='mr-2' size='20' />Record</button>
                             :
                             <button className='p-2 px-4 border border-[#E62020] rounded-full font-bold flex justify-center items-center text-[#FF0000]' onClick={() => {
