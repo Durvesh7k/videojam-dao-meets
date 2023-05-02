@@ -13,7 +13,7 @@ export default function Register() {
         name : "",
         description: "",
         time: 0,
-        members : null,
+        members : [],
     })
 
     const handleClick = (e) => {
@@ -42,6 +42,21 @@ export default function Register() {
 
     const handleForm = (event) => {
         setDao({...dao, [event.target.name] : event.target.value})
+    }
+
+    function getMembers(){
+        let members = [];
+        for(var i =0; i<data.length; i++){
+            members.push(data[i].member);
+        }
+        return members;
+    }
+
+    function getDao(e){
+        e.preventDefault()
+        setDao({members: getMembers()});
+        setDao({...dao})
+        console.log(dao)
     }
 
 
@@ -113,7 +128,7 @@ export default function Register() {
 
 
                     <div className="justify-center items-center flex">
-                        <button type="submit" className="bg-green-600 p-2 px-3 rounded-lg tracking-wide font-bold hover:bg-green-700 ">SUBMIT</button>
+                        <button onClick={getDao}  type="submit" className="bg-green-600 p-2 px-3 rounded-lg tracking-wide font-bold hover:bg-green-700 ">SUBMIT</button>
                     </div>
 
                     

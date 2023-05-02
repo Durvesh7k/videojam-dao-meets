@@ -14,7 +14,9 @@ import {
     usePeers,
     useRoom,
     useVideo,
+    useRecording
 } from "@huddle01/react/hooks";
+import {useRecorder} from '@huddle01/react/app-utils'
 import { useEventListener } from "@huddle01/react";
 import { Audio, Video } from "@huddle01/react/components";
 
@@ -29,7 +31,9 @@ export default function MeetID() {
 
     const videoRef = useRef(null);
     const { state, send } = useMeetingMachine();
-    const [isSideOpen, setIsSideOpen] = useState(false)
+    const [isSideOpen, setIsSideOpen] = useState(false) 
+    const {startRecording, stopRecording} = useRecording();
+
 
 
     const [audioenabled, setaudioEnabled] = useState(false);
@@ -46,7 +50,7 @@ export default function MeetID() {
         console.log("lobby:joined")
     })
 
-   
+    useRecorder(meet_id,'KL1r3E1yHfcrRbXsT4mcE-3mK60Yc3YR'|| "");
 
 
 
@@ -73,21 +77,25 @@ export default function MeetID() {
         joinLobby(meet_id)
     }, [])
 
-    function videoToggle(){
-        if(videoenabled){
+    function videoToggle() {
+        if (videoenabled) {
             stopVideoStream();
-        }else{
+        } else {
             fetchVideoStream()
         }
     }
 
-    function audioToggle(){
-        if(audioenabled){
+    function audioToggle() {
+        if (audioenabled) {
             stopAudioStream();
-        }else{
+        } else {
             fetchAudioStream()
         }
     }
+
+    useEffect(() => {
+        console.log(peers)
+    }, [peers])
 
     return <>
         <div className='bg-[#212121]  scrollbar-hide h-screen'>
@@ -127,7 +135,9 @@ export default function MeetID() {
             {/* CONTROLS */}
             <div className=' sticky flex justify-center space-x-3 cursor-pointer'>
                 <Link href="/meet"><div className='bg-red-600 hover:bg-red-700 p-2 rounded-3xl px-3'>
-                    <MdCallEnd className='text-2xl ' />
+                    <MdCallEnd onClick={() => {
+                        leaveRoom();
+                    }} className='text-2xl ' />
                 </div></Link>
 
                 {/* VIDEO CAMERA  */}
@@ -170,11 +180,13 @@ export default function MeetID() {
                 < li className='ml-2' >
                     <div className="">
                         {!joinedroom ? <button className='p-2 px-4 border-2 rounded-full font-bold flex justify-center items-center' onClick={() => {
-                            setJoinedRoom(!joinedroom)
+                            setJoinedRoom(!joinedroom);
+                            joinRoom();
                         }} >Join Room</button>
                             :
                             <button className='p-2 px-4 border-2 border-green-700 rounded-full font-bold flex justify-center items-center text-green-500' onClick={() => {
                                 setJoinedRoom(!joinedroom)
+                                leaveRoom();
                             }} >Joined . . .</button>
                         }
                     </div>
@@ -217,10 +229,10 @@ export default function MeetID() {
                                 readOnly
                             />
                             <div
-                            onClick={()=>{
-                                setvideoEnabled(!videoenabled);
-                                videoToggle();
-                            }}
+                                onClick={() => {
+                                    setvideoEnabled(!videoenabled);
+                                    videoToggle();
+                                }}
                                 className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
                             ></div>
                             <span className="ml-2 text-md font-medium ">
@@ -235,10 +247,12 @@ export default function MeetID() {
                     <div className="">
                         {!isActive3 ? <button className='p-2 px-4 border rounded-full font-bold flex justify-center items-center' onClick={() => {
                             setIsActive3(!isActive3)
+                            startRecording(`https://localhost:3000/meet/${meet_id}`)
                         }} ><BsRecordBtn className='mr-2' size='20' />Record</button>
                             :
                             <button className='p-2 px-4 border border-[#E62020] rounded-full font-bold flex justify-center items-center text-[#FF0000]' onClick={() => {
                                 setIsActive3(!isActive3)
+                                stopRecording();
                             }} ><BsRecordBtn className='mr-2' size='20' /> Recording</button>
                         }
                     </div>
@@ -246,16 +260,15 @@ export default function MeetID() {
 
                 {/* PEERS */}
                 < li className='ml-2' >
-                    <div className='flex flex-col justify-start items-start ml-3'>
+                    <div className='flex flex-col justify-start items-start ml-3 font-semibold'>
                         <h1 className='text-xl font-semibold underline underline-offset-4'>PEERS</h1>
                         <ul className='mt-3 list-disc'>
-                            <li>Lorem ipsum dolor sit amet consectetur </li>
-                            <li>peer1</li>
-                            <li>peer1</li>
-                            <li>peer1</li>
-                            <li>peer1</li>
-                            <li>peer1</li>
-                            <li>peer1</li>
+                            {Object.values(peers)
+                                .map((peer) => {
+                                    return(
+                                        <li>{peer.peerId}</li>
+                                    )
+                                })}
                         </ul>
                     </div>
                 </li >
